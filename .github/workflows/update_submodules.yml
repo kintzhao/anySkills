@@ -1,0 +1,102 @@
+name: Update Submodules
+
+on:
+  # 每隔6小时更新一次（北京时间 0:00, 6:00, 12:00, 18:00）
+  # 北京时间 = UTC+8，所以 UTC 时间为 16:00, 22:00, 4:00, 10:00
+  schedule:
+    - cron: '0 4,10,16,22 * * *'
+
+  # 支持在 Actions 页面手动触发，便于调试
+  workflow_dispatch:
+
+jobs:
+  update:
+    name: Update All Submodules
+    runs-on: ubuntu-latest
+    # 赋予写入仓库内容的权限（用于 git push）
+    permissions:
+      contents: write
+
+    steps:
+      # ── 1. 检出代码（包含所有 submodules）────────────────────
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          # 拉取完整历史，避免 push 冲突
+          fetch-depth: 0
+          # 递归检出所有 submodules
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 2. 配置 Git 用户信息 ──────────────────────────────────
+      - name: Configure Git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # ── 3. 更新所有 submodules 到最新版本 ─────────────────────
+      - name: Update submodules
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          echo "🔄 开始更新所有 submodules..."
+          
+          # 更新所有 submodules 到远程最新版本
+          git submodule update --remote --merge
+          
+          echo "✅ Submodules 更新完成"
+
+      # ── 4. 检查并提交变更 ────────────────────────────────────
+      - name: Commit and push changes
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          # 检查是否有变更
+          if git diff --quiet; then
+            echo "::notice::No submodule changes detected, skipping commit."
+            exit 0
+          fi
+          
+          # 获取当前时间（北京时间）
+          TIMESTAMP=$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S')
+          
+          # 获取变更的 submodule 信息
+          CHANGED_SUBMODULES=$(git diff --name-only | grep -E '^([^/]+/){2}[^/]+$' || true)
+          
+          if [ -n "$CHANGED_SUBMODULES" ]; then
+            echo "📝 变更的 submodules:"
+            echo "$CHANGED_SUBMODULES"
+            
+            # 添加 .gitmodules 和所有变更的 submodule
+            git add .gitmodules
+            git add -A
+            
+            # 提交变更
+            git commit -m "chore: update submodules at ${TIMESTAMP} [skip ci]"
+            
+            # 推送到远程
+            git push
+            
+            echo "✅ 变更已提交并推送"
+          else
+            echo "::notice::No submodule changes to commit."
+          fi
+
+      # ── 5. 生成更新报告 ──────────────────────────────────────
+      - name: Generate update report
+        if: always()
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          echo "## 📊 Submodule 更新报告" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**执行时间**: $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S CST')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Submodule 总数**: $(git submodule status | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # 显示所有 submodules 的当前版本
+          echo "### 📦 当前 Submodule 版本" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          git submodule status >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY

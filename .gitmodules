@@ -1,0 +1,60 @@
+[submodule "claude_code/anthropics/skills"]
+	path = claude_code/anthropics/skills
+	url = https://github.com/anthropics/skills
+[submodule "claude_code/obra/superpowers"]
+	path = claude_code/obra/superpowers
+	url = https://github.com/obra/superpowers
+[submodule "claude_code/travisvn/awesome-claude-skills"]
+	path = claude_code/travisvn/awesome-claude-skills
+	url = https://github.com/travisvn/awesome-claude-skills
+[submodule "claude_code/BehiSecc/awesome-claude-skills"]
+	path = claude_code/BehiSecc/awesome-claude-skills
+	url = https://github.com/BehiSecc/awesome-claude-skills
+[submodule "claude_code/ComposioHQ/awesome-claude-skills"]
+	path = claude_code/ComposioHQ/awesome-claude-skills
+	url = https://github.com/ComposioHQ/awesome-claude-skills
+[submodule "claude_code/hesreallyhim/awesome-claude-code"]
+	path = claude_code/hesreallyhim/awesome-claude-code
+	url = https://github.com/hesreallyhim/awesome-claude-code
+[submodule "claude_code/karanb192/awesome-claude-skills"]
+	path = claude_code/karanb192/awesome-claude-skills
+	url = https://github.com/karanb192/awesome-claude-skills
+[submodule "claude_code/alirezarezvani/claude-skills"]
+	path = claude_code/alirezarezvani/claude-skills
+	url = https://github.com/alirezarezvani/claude-skills
+[submodule "claude_code/Jeffallan/claude-skills"]
+	path = claude_code/Jeffallan/claude-skills
+	url = https://github.com/Jeffallan/claude-skills
+[submodule "claude_code/sickn33/antigravity-awesome-skills"]
+	path = claude_code/sickn33/antigravity-awesome-skills
+	url = https://github.com/sickn33/antigravity-awesome-skills
+[submodule "multi_platform/openai/skills"]
+	path = multi_platform/openai/skills
+	url = https://github.com/openai/skills
+[submodule "multi_platform/VoltAgent/awesome-agent-skills"]
+	path = multi_platform/VoltAgent/awesome-agent-skills
+	url = https://github.com/VoltAgent/awesome-agent-skills
+[submodule "multi_platform/vercel-labs/agent-skills"]
+	path = multi_platform/vercel-labs/agent-skills
+	url = https://github.com/vercel-labs/agent-skills
+[submodule "multi_platform/supabase/agent-skills"]
+	path = multi_platform/supabase/agent-skills
+	url = https://github.com/supabase/agent-skills
+[submodule "openclaw/VoltAgent/awesome-openclaw-skills"]
+	path = openclaw/VoltAgent/awesome-openclaw-skills
+	url = https://github.com/VoltAgent/awesome-openclaw-skills
+[submodule "openclaw/LeoYeAI/openclaw-master-skills"]
+	path = openclaw/LeoYeAI/openclaw-master-skills
+	url = https://github.com/LeoYeAI/openclaw-master-skills
+[submodule "openclaw/sundial-org/awesome-openclaw-skills"]
+	path = openclaw/sundial-org/awesome-openclaw-skills
+	url = https://github.com/sundial-org/awesome-openclaw-skills
+[submodule "others/remotion-dev/skills"]
+	path = others/remotion-dev/skills
+	url = https://github.com/remotion-dev/skills
+[submodule "others/hashicorp/agent-skills"]
+	path = others/hashicorp/agent-skills
+	url = https://github.com/hashicorp/agent-skills
+[submodule "openclaw/jakiechris/clawskills"]
+	path = openclaw/jakiechris/clawskills
+	url = https://github.com/jakiechris/clawskills

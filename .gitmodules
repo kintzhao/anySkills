@@ -58,3 +58,6 @@
 [submodule "openclaw/jakiechris/clawskills"]
 	path = openclaw/jakiechris/clawskills
 	url = https://github.com/jakiechris/clawskills
+[submodule "openclaw/openclaw/skills"]
+	path = openclaw/openclaw/skills
+	url = https://github.com/openclaw/skills

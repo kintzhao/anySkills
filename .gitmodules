@@ -61,3 +61,6 @@
 [submodule "openclaw/openclaw/skills"]
 	path = openclaw/openclaw/skills
 	url = https://github.com/openclaw/skills
+[submodule "MiniMax-AI"]
+	path = MiniMax-AI
+	url = https://github.com/MiniMax-AI/skills.git

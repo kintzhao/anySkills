@@ -64,3 +64,6 @@
 [submodule "MiniMax-AI"]
 	path = MiniMax-AI
 	url = https://github.com/MiniMax-AI/skills.git
+[submodule "claude_code/forrestchang/andrej-karpathy-skills"]
+	path = claude_code/forrestchang/andrej-karpathy-skills
+	url = https://github.com/forrestchang/andrej-karpathy-skills

@@ -20,7 +20,7 @@ anySkills/
 
 ## 技能仓库列表
 
-### 🔵 Claude Code 官方/核心 (10个)
+### 🔵 Claude Code 官方/核心 (11个)
 
 | 仓库 | 说明 |
 |------|------|
@@ -34,6 +34,7 @@ anySkills/
 | [alirezarezvani/claude-skills](./claude_code/alirezarezvani/claude-skills) | 192+ 跨平台技能 |
 | [karanb192/awesome-claude-skills](./claude_code/karanb192/awesome-claude-skills) | 50+ 验证技能 |
 | [sickn33/antigravity-awesome-skills](./claude_code/sickn33/antigravity-awesome-skills) | 1000+ 技能合集 |
+| [forrestchang/andrej-karpathy-skills](./claude_code/forrestchang/andrej-karpathy-skills) | Karpathy 编程原则 |
 
 ### 🟣 多平台 Agent Skills (4个)
 
@@ -96,8 +97,8 @@ git submodule update --init multi_platform/openai/skills
 
 ## 统计信息
 
-- **总计**: 22 个仓库
-- **有效**: 21 个 ✅
+- **总计**: 23 个仓库
+- **有效**: 22 个 ✅
 - **无效**: 1 个 ❌ (`google-labs-code/agent-skills` - 仓库不存在)
 
 ## 相关资源

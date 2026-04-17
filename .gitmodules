@@ -67,3 +67,6 @@
 [submodule "claude_code/forrestchang/andrej-karpathy-skills"]
 	path = claude_code/forrestchang/andrej-karpathy-skills
 	url = https://github.com/forrestchang/andrej-karpathy-skills
+[submodule "multi_platform/jnMetaCode/agency-agents-zh"]
+	path = multi_platform/jnMetaCode/agency-agents-zh
+	url = https://github.com/jnMetaCode/agency-agents-zh.git

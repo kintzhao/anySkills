@@ -28,6 +28,7 @@
 | ❌ | ~~google-labs-code/agent-skills~~ | 仓库不存在 |
 | ✅ | [openai/skills](https://github.com/openai/skills) | OpenAI Codex 官方 |
 | ✅ | [supabase/agent-skills](https://github.com/supabase/agent-skills) | Supabase 官方 |
+| ✅ | [jnMetaCode/agency-agents-zh](https://github.com/jnMetaCode/agency-agents-zh) | 211个AI专家角色，支持16种工具 |
 
 ## OpenClaw 生态
 
@@ -48,6 +49,6 @@
 
 ## 统计
 
-- **总计**: 23 个仓库
-- **有效**: 22 个 ✅
+- **总计**: 24 个仓库
+- **有效**: 23 个 ✅
 - **无效**: 1 个 ❌ (`google-labs-code/agent-skills`)

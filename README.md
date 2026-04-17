@@ -36,7 +36,7 @@ anySkills/
 | [sickn33/antigravity-awesome-skills](./claude_code/sickn33/antigravity-awesome-skills) | 1000+ 技能合集 |
 | [forrestchang/andrej-karpathy-skills](./claude_code/forrestchang/andrej-karpathy-skills) | Karpathy 编程原则 |
 
-### 🟣 多平台 Agent Skills (4个)
+### 🟣 多平台 Agent Skills (5个)
 
 | 仓库 | 说明 |
 |------|------|
@@ -44,6 +44,7 @@ anySkills/
 | [vercel-labs/agent-skills](./multi_platform/vercel-labs/agent-skills) | Vercel 官方 |
 | [openai/skills](./multi_platform/openai/skills) | OpenAI Codex 官方 |
 | [supabase/agent-skills](./multi_platform/supabase/agent-skills) | Supabase 官方 |
+| [jnMetaCode/agency-agents-zh](./multi_platform/jnMetaCode/agency-agents-zh) | 211个AI专家角色，支持16种工具 |
 
 ### 🟢 OpenClaw 生态 (5个)
 
@@ -97,8 +98,8 @@ git submodule update --init multi_platform/openai/skills
 
 ## 统计信息
 
-- **总计**: 23 个仓库
-- **有效**: 22 个 ✅
+- **总计**: 24 个仓库
+- **有效**: 23 个 ✅
 - **无效**: 1 个 ❌ (`google-labs-code/agent-skills` - 仓库不存在)
 
 ## 相关资源

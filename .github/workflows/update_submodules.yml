@@ -18,14 +18,15 @@ jobs:
       contents: write
 
     steps:
-      # ── 1. 检出代码（包含所有 submodules）────────────────────
-      - name: Checkout repository with submodules
+      # ── 1. 检出主仓库（不递归 submodule）────────────────────
+      # 不在此处递归检出 submodule，改为手动控制以跳过失效项
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           # 拉取完整历史，避免 push 冲突
           fetch-depth: 0
-          # 递归检出所有 submodules
-          submodules: recursive
+          # 关闭自动递归检出，交由后续步骤手动处理
+          submodules: false
           token: ${{ secrets.GITHUB_TOKEN }}
 
       # ── 2. 配置 Git 用户信息 ──────────────────────────────────
@@ -34,19 +35,83 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # ── 3. 更新所有 submodules 到最新版本 ─────────────────────
-      - name: Update submodules
+      # ── 3. 屏蔽失效的 submodule ──────────────────────────────
+      # 在此列出需要跳过的 submodule 路径（与 .gitmodules 中的 path 一致）
+      # update = none 会让 git submodule update 完全跳过该条目，不再尝试克隆
+      - name: Disable invalid submodules
+        run: |
+          # ┌─────────────────────────────────────────────────────┐
+          # │  失效 submodule 列表                                │
+          # │  每行一个路径，与 .gitmodules 中的 path 字段一致     │
+          # │  新增失效项时直接在此数组中追加即可                  │
+          # └─────────────────────────────────────────────────────┘
+          DISABLED_SUBMODULES=(
+            "openclaw/openclaw/skills"
+          )
+
+          echo "🚫 屏蔽以下失效 submodule："
+          for sm in "${DISABLED_SUBMODULES[@]}"; do
+            echo "  - $sm"
+            git config submodule."${sm}".update none
+          done
+
+      # ── 4. 初始化并检出所有 submodule（跳过屏蔽项）──────────
+      - name: Init and update submodules
+        run: |
+          echo "🔄 初始化 submodule（自动跳过屏蔽项）..."
+          git submodule update --init --recursive
+          echo "✅ Submodule 初始化完成"
+
+      # ── 5. 更新所有 submodule 到最新版本 ─────────────────────
+      - name: Update submodules to latest
         env:
           TZ: Asia/Shanghai
         run: |
-          echo "🔄 开始更新所有 submodules..."
-          
-          # 更新所有 submodules 到远程最新版本
-          git submodule update --remote --merge
-          
-          echo "✅ Submodules 更新完成"
+          echo "🔄 逐个更新 submodule 到远程最新版本..."
 
-      # ── 4. 检查并提交变更 ────────────────────────────────────
+          FAILED=()
+          SKIPPED=()
+          UPDATED=()
+
+          # 遍历 .gitmodules 中的所有 path
+          while IFS= read -r sm_path; do
+            # 检查是否被屏蔽
+            update_strategy=$(git config submodule."${sm_path}".update 2>/dev/null || echo "")
+            if [ "$update_strategy" = "none" ]; then
+              echo "  ⏭️  跳过（已屏蔽）: $sm_path"
+              SKIPPED+=("$sm_path")
+              continue
+            fi
+
+            echo "  🔄 更新: $sm_path"
+            if git submodule update --remote --merge "$sm_path" 2>&1; then
+              UPDATED+=("$sm_path")
+            else
+              echo "  ⚠️  更新失败: $sm_path"
+              FAILED+=("$sm_path")
+            fi
+          done < <(git config --file .gitmodules --get-regexp '\.path$' | awk '{print $2}')
+
+          echo ""
+          echo "────────── 更新统计 ──────────"
+          echo "✅ 成功更新: ${#UPDATED[@]} 个"
+          echo "⏭️  跳过:    ${#SKIPPED[@]} 个"
+          echo "⚠️  失败:    ${#FAILED[@]} 个"
+
+          if [ ${#FAILED[@]} -gt 0 ]; then
+            echo ""
+            echo "::warning::以下 submodule 更新失败："
+            for f in "${FAILED[@]}"; do echo "  - $f"; done
+          fi
+
+          # 将统计信息写入 GITHUB_ENV 供后续步骤使用
+          echo "FAILED_COUNT=${#FAILED[@]}" >> $GITHUB_ENV
+          echo "SKIPPED_COUNT=${#SKIPPED[@]}" >> $GITHUB_ENV
+          echo "UPDATED_COUNT=${#UPDATED[@]}" >> $GITHUB_ENV
+
+          echo "✅ Submodule 更新流程完成"
+
+      # ── 6. 检查并提交变更 ────────────────────────────────────
       - name: Commit and push changes
         env:
           TZ: Asia/Shanghai
@@ -56,33 +121,33 @@ jobs:
             echo "::notice::No submodule changes detected, skipping commit."
             exit 0
           fi
-          
+
           # 获取当前时间（北京时间）
           TIMESTAMP=$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S')
-          
+
           # 获取变更的 submodule 信息
           CHANGED_SUBMODULES=$(git diff --name-only | grep -E '^([^/]+/){2}[^/]+$' || true)
-          
+
           if [ -n "$CHANGED_SUBMODULES" ]; then
             echo "📝 变更的 submodules:"
             echo "$CHANGED_SUBMODULES"
-            
+
             # 添加 .gitmodules 和所有变更的 submodule
             git add .gitmodules
             git add -A
-            
+
             # 提交变更
             git commit -m "chore: update submodules at ${TIMESTAMP} [skip ci]"
-            
+
             # 推送到远程
             git push
-            
+
             echo "✅ 变更已提交并推送"
           else
             echo "::notice::No submodule changes to commit."
           fi
 
-      # ── 5. 生成更新报告 ──────────────────────────────────────
+      # ── 7. 生成更新报告 ──────────────────────────────────────
       - name: Generate update report
         if: always()
         env:
@@ -94,9 +159,20 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Submodule 总数**: $(git submodule status | wc -l)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
+          # 更新统计
+          echo "### 📈 更新统计" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| 状态 | 数量 |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|------|" >> $GITHUB_STEP_SUMMARY
+          echo "| ✅ 成功更新 | ${UPDATED_COUNT:-N/A} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ⏭️ 跳过（屏蔽） | ${SKIPPED_COUNT:-N/A} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ⚠️ 失败 | ${FAILED_COUNT:-N/A} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
           # 显示所有 submodules 的当前版本
           echo "### 📦 当前 Submodule 版本" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git submodule status >> $GITHUB_STEP_SUMMARY
+          git submodule status >> $GITHUB_STEP_SUMMARY 2>&1 || echo "(无法获取 submodule 状态)" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY

@@ -46,15 +46,16 @@ anySkills/
 | [supabase/agent-skills](./multi_platform/supabase/agent-skills) | Supabase 官方 |
 | [jnMetaCode/agency-agents-zh](./multi_platform/jnMetaCode/agency-agents-zh) | 211个AI专家角色，支持16种工具 |
 
-### 🟢 OpenClaw 生态 (5个)
+### 🟢 OpenClaw 生态 (6个)
 
 | 仓库 | 说明 |
 |------|------|
-| [openclaw/skills](./openclaw/openclaw/skills) | OpenClaw 官方技能存档 |
+| [AnyAgentSkills/open-claw-skills](./openclaw/openclaw/skills) | OpenClaw 官方技能存档 |
 | [VoltAgent/awesome-openclaw-skills](./openclaw/VoltAgent/awesome-openclaw-skills) | 5400+ OpenClaw 技能策展 |
 | [LeoYeAI/openclaw-master-skills](./openclaw/LeoYeAI/openclaw-master-skills) | 339+ 精选 OpenClaw 技能 |
 | [sundial-org/awesome-openclaw-skills](./openclaw/sundial-org/awesome-openclaw-skills) | 913+ OpenClaw 技能 |
 | [jakiechris/clawskills](./openclaw/jakiechris/clawskills) | OpenClaw/Claude Code 技能库 |
+| [Xquik-dev/tweetclaw](./openclaw/Xquik-dev/tweetclaw) | 审批式 X/Twitter 工作流 OpenClaw 插件和技能 |
 
 ### 🟠 其他生态 (2个)
 
@@ -98,8 +99,8 @@ git submodule update --init multi_platform/openai/skills
 
 ## 统计信息
 
-- **总计**: 24 个仓库
-- **有效**: 23 个 ✅
+- **总计**: 25 个仓库
+- **有效**: 24 个 ✅
 - **无效**: 1 个 ❌ (`google-labs-code/agent-skills` - 仓库不存在)
 
 ## 相关资源
@@ -121,4 +122,4 @@ git submodule update --init multi_platform/openai/skills
 
 ---
 
-**最后更新**: 2026-03-17
+**最后更新**: 2026-06-20

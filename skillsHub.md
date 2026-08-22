@@ -34,11 +34,12 @@
 
 | 状态 | 仓库 | 说明 |
 |------|------|------|
-| ✅ | [openclaw/skills](https://github.com/openclaw/skills) | OpenClaw 官方技能存档 |
+| ✅ | [AnyAgentSkills/open-claw-skills](https://github.com/AnyAgentSkills/open-claw-skills) | OpenClaw 官方技能存档 |
 | ✅ | [VoltAgent/awesome-openclaw-skills](https://github.com/VoltAgent/awesome-openclaw-skills) | 5400+ OpenClaw 技能策展 |
 | ✅ | [LeoYeAI/openclaw-master-skills](https://github.com/LeoYeAI/openclaw-master-skills) | 339+ 精选 OpenClaw 技能 |
 | ✅ | [sundial-org/awesome-openclaw-skills](https://github.com/sundial-org/awesome-openclaw-skills) | 913+ OpenClaw 技能 |
 | ✅ | [jakiechris/clawskills](https://github.com/jakiechris/clawskills) | OpenClaw/Claude Code 技能库 |
+| ✅ | [Xquik-dev/tweetclaw](https://github.com/Xquik-dev/tweetclaw) | 审批式 X/Twitter 工作流 OpenClaw 插件和技能 |
 
 ## 其他生态
 
@@ -49,6 +50,6 @@
 
 ## 统计
 
-- **总计**: 24 个仓库
-- **有效**: 23 个 ✅
+- **总计**: 25 个仓库
+- **有效**: 24 个 ✅
 - **无效**: 1 个 ❌ (`google-labs-code/agent-skills`)
